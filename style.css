@@ -1,4 +1,10 @@
-#books {
+main {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+main #books {
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -9,6 +15,7 @@ main #books-search {
     flex-direction: row;
     width: fit-content;
     gap: 20px;
+    height: fit-content;
 }
 
 main #book-query-div, main #book-query-limit-div {
