@@ -4,6 +4,22 @@
     gap: 20px;
 }
 
+main #books-search {
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+    gap: 20px;
+}
+
+main #book-query-div, main #book-query-limit-div {
+    display: flex;
+    flex-direction: column;
+}
+
+main #book-query-limit {
+    width: fit-content;
+}
+
 main .book {
     display: flex;
     gap: 10px;
