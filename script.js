@@ -1,7 +1,7 @@
-
-const main = document.getElementById("main")
-
 const booksDiv = document.getElementById("books")
+const bookQuery = document.getElementById("book-query")
+const bookQueryButton = document.getElementById("book-query-submit")
+const bookQueryLimit = document.getElementById("book-query-limit")
 
 async function fetchBook(query, limit) {
     const res = await fetch(`https://openlibrary.org/search.json?q=${query}&limit=${limit}`)
@@ -108,4 +108,15 @@ function appendBookISBN(res, number, parent) {
 
 }
 
-showBook(booksDiv, "wolfsong", 4)
+function clearDiv(div) {
+    while (div.firstChild) {
+        div.removeChild(div.firstChild);
+    }
+}
+
+function submitQuery() {
+    clearDiv(booksDiv)
+    showBook(booksDiv, bookQuery.value, bookQueryLimit.value)
+}
+
+bookQueryButton.addEventListener('click', submitQuery)
