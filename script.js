@@ -1,6 +1,8 @@
 
 const main = document.getElementById("main")
 
+const booksDiv = document.getElementById("books")
+
 async function fetchBook(query, limit) {
     const res = await fetch(`https://openlibrary.org/search.json?q=${query}&limit=${limit}`)
     return res
@@ -31,17 +33,26 @@ function appendBooks(res, number, parent) {
 
 function appendBook(res, number, parent) {
     const div = document.createElement('div')
+    const divChild = document.createElement('div')
+    const divChild2 = document.createElement('div')
 
-    appendBookTitle(res, number, div)
-    appendBookAuthor(res, number, div)
-    appendBookISBN(res, number, div)
-    appendBookCover(res, number, div)
+    div.className = "book"
+    divChild.className = "book-cover-div"
+    divChild2.className = "book-info-div"
 
+    appendBookCover(res, number, divChild)
+    appendBookTitle(res, number, divChild2)
+    appendBookAuthor(res, number, divChild2)
+    appendBookISBN(res, number, divChild2)
+    
+    div.appendChild(divChild)
+    div.appendChild(divChild2)
     parent.appendChild(div)
 }
 
 function appendBookCover(res, number, parent) {
     const img = document.createElement('IMG')
+    img.className = "book-cover"
     try {
         let isbn = JSON.stringify(res.docs[number].isbn[0])
         let title = JSON.stringify(res.docs[number].title)
@@ -60,6 +71,7 @@ function appendBookCover(res, number, parent) {
 
 function appendBookTitle(res, number, parent) {
     const para = document.createElement('p')
+    para.className = "book-title"
     let title = JSON.stringify(res.docs[number].title)
     title = title.replace(/['"]+/g, '')
     para.innerText = `${title}`
@@ -68,6 +80,7 @@ function appendBookTitle(res, number, parent) {
 
 function appendBookAuthor(res, number, parent) {
     const para = document.createElement('p')
+    para.className = "book-author"
     try {
         let author = JSON.stringify(res.docs[number].author_name[0])
         author = author.replace(/['"]+/g, '')
@@ -82,6 +95,7 @@ function appendBookAuthor(res, number, parent) {
 
 function appendBookISBN(res, number, parent) {
     const para = document.createElement('p')
+    para.className = "book-isbn"
     try {
         let isbn = JSON.stringify(res.docs[number].isbn[0])
         isbn = isbn.replace(/['"]+/g, '')
@@ -94,4 +108,4 @@ function appendBookISBN(res, number, parent) {
 
 }
 
-showBook(main, "brothersong", 4)
+showBook(booksDiv, "wolfsong", 4)

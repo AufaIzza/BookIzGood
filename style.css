@@ -1,0 +1,36 @@
+#books {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+main .book {
+    display: flex;
+    gap: 10px;
+    align-content: center;
+    height: fit-content;
+}
+
+main .book .book-info-div {
+    height: fit-content;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+main .book .book-cover {
+    width: 100px;
+    height: 150px;
+}
+
+main .book .book-title {
+    font-size: 30px;
+    margin: 0;
+}
+
+main .book .book-author {
+    margin: 0;
+}
+
+main .book .book-isbn {
+    margin: 0;
+}
