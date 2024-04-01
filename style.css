@@ -14,25 +14,26 @@ main {
     align-items: center;
 }
 
-
+main #query {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
 
 main #books-search {
     width: 70vw;
     display: flex;
     flex-direction: row;
-    border-style: solid;
-    border-color: #E6CCB2;
-    border-width: 1px;
     transition: 0.3s;
+	filter: drop-shadow(0 1px 1px rgb(0 0 0 / 0.05));
 }
 
 main #books-search.input-focus {
+    margin-top: 20px;
     width: 70vw;
     display: flex;
     flex-direction: row;
-    border-style: solid;
-    border-width: 2px;
-    border-color: #7f5539;
+    filter: drop-shadow(0 25px 25px rgb(0 0 0 / 0.15));
 }
 
 main #book-query-div {
@@ -62,8 +63,7 @@ main #book-query-submit {
     background-color: #DDB892;
     color: #210f04;
     border-style: none;
-    border-right-style: solid;
-    border-bottom-style: solid;
+    box-shadow: 2px 2px #b08968;
     border-color: #b08968;
     font-size: 16px;
     font-weight: bold;
@@ -101,11 +101,13 @@ main .book {
     border-radius: 4px;
     min-width: 70vw;
     transition: 0.3s;
+    box-shadow: 5px 5px #7f5539;
 }
 
 main .book:hover {
     padding: 20px;
     background-color: #DDB892;
+    box-shadow: 10px 10px #7f5539;
 }
 
 main .book .book-info-div {
