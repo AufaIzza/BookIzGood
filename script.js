@@ -16,9 +16,11 @@ async function fetchBookCover(query) {
 
 
 function showBook(parent, query, limit) {
+    appendLoad(parent)
     fetchBook(query, limit)
         .then((res) => res.json())
         .then((books) => {
+            clearDiv(parent)
             for (let i = 0; i < books.docs.length; i++) {
                 appendBooks(books, i, parent)
             }
@@ -28,6 +30,14 @@ function showBook(parent, query, limit) {
 
 function appendBooks(res, number, parent) {
     appendBook(res, number, parent)
+}
+
+function appendLoad(parent) {
+    const para = document.createElement('p')
+
+    para.innerText = "loading..."
+
+    parent.appendChild(para)
 }
 
 function appendBook(res, number, parent) {
