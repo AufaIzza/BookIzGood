@@ -1,4 +1,5 @@
 const booksDiv = document.getElementById("books")
+const bookSearchDiv = document.getElementById("books-search")
 const bookQuery = document.getElementById("book-query")
 const bookQueryButton = document.getElementById("book-query-submit")
 const bookQueryLimit = document.getElementById("book-query-limit")
@@ -18,11 +19,9 @@ function showBook(parent, query, limit) {
     fetchBook(query, limit)
         .then((res) => res.json())
         .then((books) => {
-                console.log(books)
-                for (let i = 0; i < books.docs.length; i++) {
-                    appendBooks(books, i, parent)
-                }
-
+            for (let i = 0; i < books.docs.length; i++) {
+                appendBooks(books, i, parent)
+            }
         })
         .catch((err) => console.error(err))
 }
@@ -130,3 +129,11 @@ bookQuery.addEventListener("keypress", function(event) {
       bookQueryButton.click();
     }
   });
+
+  bookQuery.addEventListener("focusin", function() {
+        bookSearchDiv.classList.add("input-focus")
+  })
+
+  bookQuery.addEventListener('focusout', function() {
+        bookSearchDiv.classList.remove("input-focus")
+  })

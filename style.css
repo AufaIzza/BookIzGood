@@ -1,7 +1,78 @@
+body {
+    background-color: #EDE0D4;
+}
+
 main {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+main #books-search {
+    width: 70vw;
+    display: flex;
+    flex-direction: row;
+    border-style: solid;
+    border-color: #E6CCB2;
+    transition: 0.3s;
+}
+
+main #books-search.input-focus {
+    width: 70vw;
+    display: flex;
+    flex-direction: row;
+    border-style: solid;
+    border-color: #7f5539;
+}
+
+main #book-query-div {
+    width: 80%;
+}
+
+main #book-query {
+    height: 50px;
+    width: 100%;
+    font-size: 20px;
+    border-style: none;
+    padding-left: 10px;
+}
+
+main #book-query:focus {
+    outline: none;
+}
+
+main #book-query-submit {
+    width: 20%;
+    background-color: #DDB892;
+    color: #210f04;
+    border-style: none;
+    border-left-style: solid;
+    border-color: #E6CCB2;
+    font-size: 24px;
+    font-weight: 900;
+    transition: 0.3s;
+}
+
+main #book-query-submit:hover {
+    background-color: #e6ccb2;
+    cursor: pointer;
+}
+
+main #book-query-limit-div {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+main #book-query-limit {
+    width: fit-content;
 }
 
 main #books {
@@ -10,28 +81,15 @@ main #books {
     gap: 20px;
 }
 
-main #books-search {
-    display: flex;
-    flex-direction: row;
-    width: fit-content;
-    gap: 20px;
-    height: fit-content;
-}
-
-main #book-query-div, main #book-query-limit-div {
-    display: flex;
-    flex-direction: column;
-}
-
-main #book-query-limit {
-    width: fit-content;
-}
-
 main .book {
     display: flex;
     gap: 10px;
     align-content: center;
     height: fit-content;
+    background-color: #E6CCB2;
+    padding: 20px;
+    border-radius: 4px;
+    min-width: 70vw;
 }
 
 main .book .book-info-div {
@@ -46,7 +104,9 @@ main .book .book-cover {
 }
 
 main .book .book-title {
-    font-size: 30px;
+    font-size: 24px;
+    font-weight: 800;
+    text-decoration: underline;
     margin: 0;
 }
 

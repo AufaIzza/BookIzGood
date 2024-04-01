@@ -9,10 +9,12 @@
 </head>
 <body>
     <main>
-        <div id="books-search">
-            <div id="book-query-div">
-                <label for="book-query">Search Book</label>
-                <input type="text" name="book-query" id="book-query">
+        <div id="query">
+            <div id="books-search">
+                <div id="book-query-div">
+                    <input type="text" name="book-query" id="book-query" placeholder="Search for book title">
+                </div>
+                <input type="button" value="search" id="book-query-submit">
             </div>
             <div id="book-query-limit-div">
                 <label for="book-query-limit">Search Limit</label>
@@ -22,7 +24,6 @@
                     <option value="24">24</option>
                 </select>
             </div>
-            <input type="button" value="search" id="book-query-submit">
         </div>
         <div id="books">
 
