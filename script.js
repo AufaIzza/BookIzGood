@@ -117,6 +117,20 @@ function appendBookISBN(res, number, parent) {
 
 }
 
+function queryAppendEmpty(parent) {
+    const div = document.createElement('div')
+    const para = document.createElement('p')
+    const para2 = document.createElement('p')
+
+    para.innerText = "Query is empty"
+    para2.innerText = "Please Enter A Book Name"
+
+    div.appendChild(para)
+    div.appendChild(para2)
+
+    parent.appendChild(div)
+}
+
 function clearDiv(div) {
     while (div.firstChild) {
         div.removeChild(div.firstChild);
@@ -124,8 +138,13 @@ function clearDiv(div) {
 }
 
 function submitQuery() {
+    if (bookQuery.value == "") {
+        clearDiv(booksDiv)
+        queryAppendEmpty(booksDiv)
+    } else {
     clearDiv(booksDiv)
     showBook(booksDiv, bookQuery.value, bookQueryLimit.value)
+    }
 }
 
 bookQueryButton.addEventListener('click', submitQuery)
@@ -147,3 +166,5 @@ bookQuery.addEventListener("keypress", function(event) {
   bookQuery.addEventListener('focusout', function() {
         bookSearchDiv.classList.remove("input-focus")
   })
+
+  queryAppendEmpty(booksDiv)
