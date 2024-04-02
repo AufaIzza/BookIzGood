@@ -1,37 +1,50 @@
+// const declarations for DOM elements
 const booksDiv = document.getElementById("books")
 const bookSearchDiv = document.getElementById("books-search")
 const bookQuery = document.getElementById("book-query")
 const bookQueryButton = document.getElementById("book-query-submit")
 const bookQueryLimit = document.getElementById("book-query-limit")
 
-async function fetchBook(query, limit) {
-    const res = await fetch(`https://openlibrary.org/search.json?q=${query}&limit=${limit}`)
+
+// GET API that returns a json of books that is based on the string query given
+// Query should be a string, Limit and offset should be an integer
+// Default offset is put to 0 for pagination purposes
+async function fetchBooks(query, limit, offset = 0) {
+    const res = await fetch(`https://openlibrary.org/search.json?q=${query}&limit=${limit}&offset=${offset}`)
     return res
 }
 
-async function fetchBookCover(query) {
-    const res = await fetch(`https://covers.openlibrary.org/b/isbn/${query}-M.jpg`)
+// GET API that returns a cover image of a book using ISBN number to search the cover
+// isbn and size should be a string
+// default value of size is M
+// possible size value is: S, M, L
+async function fetchBookCover(isbn, size = "M") {
+    const res = await fetch(`https://covers.openlibrary.org/b/isbn/${isbn}-${size}.jpg`)
     return res
 }
 
-
-function showBook(parent, query, limit) {
+// fetches the books from fetchBooks function using arguments
+// parent is the div variable that is the book is going to append itself into
+// query is the string that will be searched when using the API
+// limit is the integer that will limit the amount of searches that will be used
+// whilst the books are loading it will call the appendLoad() function to show users it is loading
+// after the books have been retrieved it will call clearDiv() to remove any existing element in the parent div
+// appendBook() will then be called for every single book that got retrieved
+function showBooks(parent, query, limit) {
     appendLoad(parent)
-    fetchBook(query, limit)
+    fetchBooks(query, limit)
         .then((res) => res.json())
         .then((books) => {
             clearDiv(parent)
             for (let i = 0; i < books.docs.length; i++) {
-                appendBooks(books, i, parent)
+                appendBook(books, i, parent)
             }
         })
         .catch((err) => console.error(err))
 }
 
-function appendBooks(res, number, parent) {
-    appendBook(res, number, parent)
-}
-
+// Load function that will be put whilst the user is waiting for the retrieval of books
+// required so that the user didnt think anything is broken after they press the search button
 function appendLoad(parent) {
     const para = document.createElement('p')
 
@@ -40,6 +53,14 @@ function appendLoad(parent) {
     parent.appendChild(para)
 }
 
+// creates a div for a book and puts book details inside of the div
+// it will search up for the cover, title, author, and ISBN of the book
+// res is the JSON that is retrieved from the API
+// number is the index of the book that is being appended
+// parent is the div element that the book will be appended to
+// the div of the book itself has the class of "book"
+// the cover has the class name of "book-cover-div"
+// the main info has the class name of "book-info-div"
 function appendBook(res, number, parent) {
     const div = document.createElement('div')
     const divChild = document.createElement('div')
@@ -59,6 +80,7 @@ function appendBook(res, number, parent) {
     parent.appendChild(div)
 }
 
+// Creates an IMG element that is retreived from fetchBookCover
 function appendBookCover(res, number, parent) {
     const img = document.createElement('IMG')
     img.className = "book-cover"
@@ -143,7 +165,7 @@ function submitQuery() {
         queryAppendEmpty(booksDiv)
     } else {
     clearDiv(booksDiv)
-    showBook(booksDiv, bookQuery.value, bookQueryLimit.value)
+    showBooks(booksDiv, bookQuery.value, bookQueryLimit.value)
     }
 }
 
