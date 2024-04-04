@@ -27,6 +27,7 @@ main {
     margin-right: auto;
     justify-content: center;
     align-items: center;
+    margin-bottom: 40px;
 }
 
 main #query {
