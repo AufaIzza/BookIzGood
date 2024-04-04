@@ -5,7 +5,6 @@ const bookQuery = document.getElementById("book-query")
 const bookQueryButton = document.getElementById("book-query-submit")
 const bookQueryLimit = document.getElementById("book-query-limit")
 
-
 // GET API that returns a json of books that is based on the string query given
 // Query should be a string, Limit and offset should be an integer
 // Default offset is put to 0 for pagination purposes
@@ -22,6 +21,24 @@ async function fetchBookCover(isbn, size = "M") {
     const res = await fetch(`https://covers.openlibrary.org/b/isbn/${isbn}-${size}.jpg`)
     return res
 }
+
+// defines the current page for pagination purposes
+let booksPaginationPage = 0
+
+// nextPaginationPage adds 1 to booksPaginationPage
+function nextPaginationPage() {
+    booksPaginationPage += 1
+}
+
+// nextPaginationPage substract 1 to booksPaginationPage if it is more than 0
+function prevPaginationPage() {
+    if (booksPaginationPage <= 0) {
+        return
+    }
+
+    booksPaginationPage -= 1
+}
+
 
 // fetches the books from fetchBooks function using arguments
 // parent is the div variable that is the book is going to append itself into
