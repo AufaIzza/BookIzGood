@@ -35,6 +35,7 @@ function nextPaginationPage() {
 
     clearDiv(paginationDiv)
     booksPaginationPage += 1
+    submitQuery()
     appendPagination(paginationDiv)
 }
 
@@ -50,6 +51,7 @@ function prevPaginationPage() {
 
     clearDiv(paginationDiv)
     booksPaginationPage -= 1
+    submitQuery()
     appendPagination(paginationDiv)
 }
 
@@ -63,8 +65,6 @@ function appendPagination(parent) {
 
     paginationNextDiv.addEventListener('click', nextPaginationPage)
     paginationPrevDiv.addEventListener('click', prevPaginationPage)
-
-    submitQuery()
 }
 
 function appendNextPagination(parent) {
@@ -78,10 +78,15 @@ function appendNextPagination(parent) {
 
 function appendPrevPagination(parent) {
     const div = document.createElement('div')
-    div.innerText = "<="
+    if (booksPaginationPage > 1) {
+        div.innerText = "<="
+        div.className = "page-arrow"
+    }
+    else {
+        div.innerText = "<="
+        div.className = "page-arrow-empty"
+    }
     div.id = "page-prev"
-    div.className = "page-arrow"
-
     parent.appendChild(div)
 }
 
@@ -94,7 +99,9 @@ function appendCurrentPage(number, parent) {
 }
 
 function resetPagination() {
+    clearDiv(paginationDiv)
     booksPaginationPage = 1
+    appendPagination(paginationDiv)
 }
 
 // fetches the books from fetchBooks function using arguments
@@ -259,22 +266,27 @@ function clearDiv(div) {
     }
 }
 
+function emptyQuery() {
+    clearDiv(booksDiv)
+    resetPagination()
+    clearDiv(paginationDiv)
+    queryAppendEmpty(booksDiv)
+}
+
 // submitQuery handles the main function of calling all of the append books function
 function submitQuery() {
     if (bookQuery.value == "") {
-        clearDiv(booksDiv)
-        queryAppendEmpty(booksDiv)
+        emptyQuery()
     } else {
-    clearDiv(booksDiv)
-    showBooks(booksDiv, bookQuery.value, bookQueryLimit.value, booksPaginationPage)
+        clearDiv(booksDiv)
+        showBooks(booksDiv, bookQuery.value, bookQueryLimit.value, booksPaginationPage)
     }
 }
 
 // links the bookQueryButton to the submitQuery function
 bookQueryButton.addEventListener('click', () => {
     resetPagination()
-    clearDiv(paginationDiv)
-    appendPagination(paginationDiv)
+    submitQuery()
 })
 
 // enables the user to just press enter to search instead of clicking the search button
@@ -298,7 +310,6 @@ bookQuery.addEventListener('focusout', function() {
 
 
 // calls the queryAppendEmpty first because by default there is no query
-queryAppendEmpty(booksDiv)
+emptyQuery(booksDiv)
 
-appendPagination(paginationDiv)
 
