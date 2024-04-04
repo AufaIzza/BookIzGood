@@ -27,6 +27,7 @@ main {
     margin-right: auto;
     justify-content: center;
     align-items: center;
+    margin-bottom: 40px;
 }
 
 main #query {
@@ -111,10 +112,11 @@ main .book {
     gap: 10px;
     align-content: center;
     height: fit-content;
+    flex-direction: column;
     background-color: #E6CCB2;
     padding: 15px;
     border-radius: 4px;
-    min-width: 70vw;
+    min-width: 68vw;
     transition: 0.3s;
     box-shadow: 5px 5px #7f5539;
 }
@@ -125,19 +127,44 @@ main .book:hover {
     box-shadow: 10px 10px #7f5539;
 }
 
-main .book .book-info-div {
+main .book-main {
+    display: flex;
+    gap: 10px;
+    align-content: center;
     height: fit-content;
-    margin-top: auto;
-    margin-bottom: auto;
+}
+
+main .book .book-info-div {
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+    justify-content: space-between;
+}
+
+main .book .book-info-more-info-div {
+    width: fit-content;
+    background-color: #DDB892;
+    color: #210f04;
+    box-shadow: 2px 2px #b08968;
+    border-color: #b08968;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 10px;
+    transition: 0.3s;
+}
+
+main .book .book-info-more-info-div:hover {
+    background-color: #e6ccb2;
+    cursor: pointer;
 }
 
 main .book .book-cover {
-    width: 100px;
-    height: 150px;
+    width: 80px;
+    height: 128px;
 }
 
 main .book .book-title {
-    font-size: 24px;
+    font-size: 28px;
     font-weight: 800;
     text-decoration: underline;
     margin: 0;
@@ -147,6 +174,41 @@ main .book .book-author {
     margin: 0;
 }
 
-main .book .book-isbn {
+main .book .book-more-info {
     margin: 0;
+}
+
+main #pagination {
+    display: flex;
+    justify-content: space-between;
+    width: 60vw;
+}
+
+main #pagination .page-arrow {
+    background-color: #DDB892;
+    color: #210f04;
+    box-shadow: 2px 2px #b08968;
+    border-color: #b08968;
+    font-size: 24px;
+    font-weight: 200;
+    padding: 0 20px;
+    transition: 0.3s;
+}
+
+main #pagination .page-arrow-empty {
+    padding: 0 20px;
+    font-size: 24px;
+    font-weight: 200;
+    color: #EDE0D4;
+}
+
+main #pagination .page-arrow:hover {
+    background-color: #e6ccb2;
+    cursor: pointer;
+}
+
+main #pagination .page-number {
+    font-weight: 600;
+    display: flex;
+    align-items: center;
 }
