@@ -4,12 +4,14 @@ const bookSearchDiv = document.getElementById("books-search")
 const bookQuery = document.getElementById("book-query")
 const bookQueryButton = document.getElementById("book-query-submit")
 const bookQueryLimit = document.getElementById("book-query-limit")
+const paginationDiv = document.getElementById("pagination")
+
 
 // GET API that returns a json of books that is based on the string query given
 // Query should be a string, Limit and offset should be an integer
 // Default offset is put to 0 for pagination purposes
-async function fetchBooks(query, limit, offset = 0) {
-    const res = await fetch(`https://openlibrary.org/search.json?q=${query}&limit=${limit}&offset=${offset}`)
+async function fetchBooks(query, limit, page = 1) {
+    const res = await fetch(`https://openlibrary.org/search.json?q=${query}&limit=${limit}&page=${page}`)
     return res
 }
 
@@ -23,22 +25,77 @@ async function fetchBookCover(isbn, size = "M") {
 }
 
 // defines the current page for pagination purposes
-let booksPaginationPage = 0
+let booksPaginationPage = 1
 
 // nextPaginationPage adds 1 to booksPaginationPage
 function nextPaginationPage() {
-    booksPaginationPage += 1
-}
-
-// nextPaginationPage substract 1 to booksPaginationPage if it is more than 0
-function prevPaginationPage() {
-    if (booksPaginationPage <= 0) {
+    if (bookQuery.value == "") {
         return
     }
 
-    booksPaginationPage -= 1
+    clearDiv(paginationDiv)
+    booksPaginationPage += 1
+    appendPagination(paginationDiv)
 }
 
+// nextPaginationPage substract 1 to booksPaginationPage if it is more than 1
+function prevPaginationPage() { 
+    if (bookQuery.value == "") {
+        return
+    }
+
+    if (booksPaginationPage <= 1) {
+        return
+    }
+
+    clearDiv(paginationDiv)
+    booksPaginationPage -= 1
+    appendPagination(paginationDiv)
+}
+
+function appendPagination(parent) {
+    appendPrevPagination(parent)
+    appendCurrentPage(booksPaginationPage, parent)
+    appendNextPagination(parent)
+
+    const paginationPrevDiv = document.getElementById("page-prev")
+    const paginationNextDiv = document.getElementById("page-next")
+
+    paginationNextDiv.addEventListener('click', nextPaginationPage)
+    paginationPrevDiv.addEventListener('click', prevPaginationPage)
+
+    submitQuery()
+}
+
+function appendNextPagination(parent) {
+    const div = document.createElement('div')
+    div.innerText = "=>"
+    div.id = "page-next"
+    div.className = "page-arrow"
+
+    parent.appendChild(div)
+}
+
+function appendPrevPagination(parent) {
+    const div = document.createElement('div')
+    div.innerText = "<="
+    div.id = "page-prev"
+    div.className = "page-arrow"
+
+    parent.appendChild(div)
+}
+
+function appendCurrentPage(number, parent) {
+    const div = document.createElement('div')
+    div.innerText = `PAGE ${number}`
+    div.className = "page-number"
+
+    parent.appendChild(div)
+}
+
+function resetPagination() {
+    booksPaginationPage = 1
+}
 
 // fetches the books from fetchBooks function using arguments
 // parent is the div variable that is the book is going to append itself into
@@ -47,9 +104,9 @@ function prevPaginationPage() {
 // whilst the books are loading it will call the appendLoad() function to show users it is loading
 // after the books have been retrieved it will call clearDiv() to remove any existing element in the parent div
 // appendBook() will then be called for every single book that got retrieved
-function showBooks(parent, query, limit) {
+function showBooks(parent, query, limit, page) {
     appendLoad(parent)
-    fetchBooks(query, limit)
+    fetchBooks(query, limit, page)
         .then((res) => res.json())
         .then((books) => {
             clearDiv(parent)
@@ -209,12 +266,16 @@ function submitQuery() {
         queryAppendEmpty(booksDiv)
     } else {
     clearDiv(booksDiv)
-    showBooks(booksDiv, bookQuery.value, bookQueryLimit.value)
+    showBooks(booksDiv, bookQuery.value, bookQueryLimit.value, booksPaginationPage)
     }
 }
 
 // links the bookQueryButton to the submitQuery function
-bookQueryButton.addEventListener('click', submitQuery)
+bookQueryButton.addEventListener('click', () => {
+    resetPagination()
+    clearDiv(paginationDiv)
+    appendPagination(paginationDiv)
+})
 
 // enables the user to just press enter to search instead of clicking the search button
 bookQuery.addEventListener("keypress", function(event) {
@@ -234,5 +295,10 @@ bookQuery.addEventListener('focusout', function() {
     bookSearchDiv.classList.remove("input-focus")
 })
 
+
+
 // calls the queryAppendEmpty first because by default there is no query
 queryAppendEmpty(booksDiv)
+
+appendPagination(paginationDiv)
+

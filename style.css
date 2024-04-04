@@ -151,3 +151,29 @@ main .book .book-author {
 main .book .book-isbn {
     margin: 0;
 }
+
+main #pagination {
+    display: flex;
+    justify-content: space-between;
+    width: 60vw;
+}
+
+main #pagination .page-arrow {
+    background-color: #DDB892;
+    color: #210f04;
+    box-shadow: 2px 2px #b08968;
+    border-color: #b08968;
+    font-size: 24px;
+    font-weight: 200;
+    padding: 0 20px;
+    transition: 0.3s;
+}
+
+main #pagination .page-arrow:hover {
+    background-color: #e6ccb2;
+    cursor: pointer;
+}
+
+main #pagination .page-number {
+    font-weight: 600;
+}
