@@ -11,8 +11,7 @@ const paginationDiv = document.getElementById("pagination")
 // Query should be a string, Limit and offset should be an integer
 // Default offset is put to 0 for pagination purposes
 async function fetchBooks(query, limit, page = 1) {
-    const res = await fetch(`https://openlibrary.org/search.json?q=${query}&limit=${limit}&page=${page}`)
-    return res
+    return await fetch(`https://openlibrary.org/search.json?q=${query}&limit=${limit}&page=${page}`)
 }
 
 // GET API that returns a cover image of a book using ISBN number to search the cover
@@ -20,8 +19,7 @@ async function fetchBooks(query, limit, page = 1) {
 // default value of size is M
 // possible size value is: S, M, L
 async function fetchBookCover(isbn, size = "M") {
-    const res = await fetch(`https://covers.openlibrary.org/b/isbn/${isbn}-${size}.jpg`)
-    return res
+    return await fetch(`https://covers.openlibrary.org/b/isbn/${isbn}-${size}.jpg`)
 }
 
 // defines the current page for pagination purposes
@@ -39,7 +37,7 @@ function nextPaginationPage() {
     appendPagination(paginationDiv)
 }
 
-// nextPaginationPage substract 1 to booksPaginationPage if it is more than 1
+// nextPaginationPage subtract 1 to booksPaginationPage if it is more than 1
 function prevPaginationPage() { 
     if (bookQuery.value == "") {
         return
@@ -59,12 +57,6 @@ function appendPagination(parent) {
     appendPrevPagination(parent)
     appendCurrentPage(booksPaginationPage, parent)
     appendNextPagination(parent)
-
-    const paginationPrevDiv = document.getElementById("page-prev")
-    const paginationNextDiv = document.getElementById("page-next")
-
-    paginationNextDiv.addEventListener('click', nextPaginationPage)
-    paginationPrevDiv.addEventListener('click', prevPaginationPage)
 }
 
 function appendNextPagination(parent) {
@@ -73,6 +65,7 @@ function appendNextPagination(parent) {
     div.id = "page-next"
     div.className = "page-arrow"
 
+    div.addEventListener('click', nextPaginationPage)
     parent.appendChild(div)
 }
 
@@ -87,6 +80,8 @@ function appendPrevPagination(parent) {
         div.className = "page-arrow-empty"
     }
     div.id = "page-prev"
+    
+    div.addEventListener('click', prevPaginationPage)
     parent.appendChild(div)
 }
 
@@ -135,7 +130,7 @@ function appendLoad(parent) {
 }
 
 // appendBook creates a div for a book and puts book details inside of the div
-// it will search up for the cover, title, author, and ISBN of the book
+// it will search up for the cover, title, and author of the book
 // res is the JSON that is retrieved from the API
 // number is the index of the book that is being appended
 // parent is the div element that the book will be appended to
@@ -144,20 +139,35 @@ function appendLoad(parent) {
 // the main info has the class name of "book-info-div"
 function appendBook(res, number, parent) {
     const div = document.createElement('div')
+    const divMain = document.createElement('div')
+    const divInfo = document.createElement('div')
     const divChild = document.createElement('div')
     const divChild2 = document.createElement('div')
 
+    const divChild2Child = document.createElement('div')
+
     div.className = "book"
+
+    divMain.className = "book-main"
+    divInfo.className = "book-info"
+    
     divChild.className = "book-cover-div"
     divChild2.className = "book-info-div"
 
+    divChild2Child.className = "book-info-title-author-div"
+
     appendBookCover(res, number, divChild)
-    appendBookTitle(res, number, divChild2)
-    appendBookAuthor(res, number, divChild2)
-    appendBookISBN(res, number, divChild2)
+    appendBookTitle(res, number, divChild2Child)
+    appendBookAuthor(res, number, divChild2Child)
     
-    div.appendChild(divChild)
-    div.appendChild(divChild2)
+    divChild2.appendChild(divChild2Child)
+
+    divMain.appendChild(divChild)
+    divMain.appendChild(divChild2)
+
+    div.appendChild(divMain)
+    div.appendChild(divInfo)
+
     parent.appendChild(div)
 }
 
@@ -273,7 +283,7 @@ function emptyQuery() {
     queryAppendEmpty(booksDiv)
 }
 
-// submitQuery handles the main function of calling all of the append books function
+// submitQuery handles the main function of calling all the append books function
 function submitQuery() {
     if (bookQuery.value == "") {
         emptyQuery()

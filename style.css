@@ -112,10 +112,11 @@ main .book {
     gap: 10px;
     align-content: center;
     height: fit-content;
+    flex-direction: column;
     background-color: #E6CCB2;
     padding: 15px;
     border-radius: 4px;
-    min-width: 50vw;
+    min-width: 68vw;
     transition: 0.3s;
     box-shadow: 5px 5px #7f5539;
 }
@@ -126,8 +127,35 @@ main .book:hover {
     box-shadow: 10px 10px #7f5539;
 }
 
-main .book .book-info-div {
+main .book-main {
+    display: flex;
+    gap: 10px;
+    align-content: center;
     height: fit-content;
+}
+
+main .book .book-info-div {
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+    justify-content: space-between;
+}
+
+main .book .book-info-more-info-div {
+    width: fit-content;
+    background-color: #DDB892;
+    color: #210f04;
+    box-shadow: 2px 2px #b08968;
+    border-color: #b08968;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 10px;
+    transition: 0.3s;
+}
+
+main .book .book-info-more-info-div:hover {
+    background-color: #e6ccb2;
+    cursor: pointer;
 }
 
 main .book .book-cover {
@@ -146,7 +174,7 @@ main .book .book-author {
     margin: 0;
 }
 
-main .book .book-isbn {
+main .book .book-more-info {
     margin: 0;
 }
 
