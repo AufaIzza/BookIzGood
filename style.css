@@ -115,7 +115,7 @@ main .book {
     background-color: #E6CCB2;
     padding: 15px;
     border-radius: 4px;
-    min-width: 70vw;
+    min-width: 50vw;
     transition: 0.3s;
     box-shadow: 5px 5px #7f5539;
 }
