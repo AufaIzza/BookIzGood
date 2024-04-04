@@ -53,7 +53,7 @@ function appendLoad(parent) {
     parent.appendChild(para)
 }
 
-// creates a div for a book and puts book details inside of the div
+// appendBook creates a div for a book and puts book details inside of the div
 // it will search up for the cover, title, author, and ISBN of the book
 // res is the JSON that is retrieved from the API
 // number is the index of the book that is being appended
@@ -80,7 +80,11 @@ function appendBook(res, number, parent) {
     parent.appendChild(div)
 }
 
-// Creates an IMG element that is retreived from fetchBookCover
+// appendBookCover creates an IMG element that is retreived from res and appends it to parent
+// parent is the div element that the IMG is gonna be appended to
+// res is the json that is being retrieved from the api
+// number is the index of the book that is being appended
+// the book cover have the class name of "book-cover"
 function appendBookCover(res, number, parent) {
     const img = document.createElement('IMG')
     img.className = "book-cover"
@@ -100,15 +104,30 @@ function appendBookCover(res, number, parent) {
     }    
 }
 
+// appendBookTitle creates a 'p' element that is retrieved from res and appends it to parent
+// parent is the div element that the IMG is gonna be appended to
+// res is the json that is being retrieved from the api
+// number is the index of the book that is being appended
+// the book title have the class name of "book-title"
 function appendBookTitle(res, number, parent) {
     const para = document.createElement('p')
     para.className = "book-title"
-    let title = JSON.stringify(res.docs[number].title)
-    title = title.replace(/['"]+/g, '')
-    para.innerText = `${title}`
-    parent.appendChild(para)
+    try {
+        let title = JSON.stringify(res.docs[number].title)
+        title = title.replace(/['"]+/g, '')
+        para.innerText = `${title}`
+        parent.appendChild(para)
+    } catch(err) {
+        para.innerText = "Title not found"
+        parent.appendChild(para)
+    }
 }
 
+// appendBookAuthor creates a 'p' element that is retrieved from res and appends it to parent
+// parent is the div element that the IMG is gonna be appended to
+// res is the json that is being retrieved from the api
+// number is the index of the book that is being appended
+// the book author have the class name of "book-author"
 function appendBookAuthor(res, number, parent) {
     const para = document.createElement('p')
     para.className = "book-author"
@@ -124,6 +143,11 @@ function appendBookAuthor(res, number, parent) {
 
 }
 
+// appendBookISBN creates a 'p' element that is retrieved from res and appends it to parent
+// parent is the div element that the IMG is gonna be appended to
+// res is the json that is being retrieved from the api
+// number is the index of the book that is being appended
+// the book ISBN have the class name of "book-isbn"
 function appendBookISBN(res, number, parent) {
     const para = document.createElement('p')
     para.className = "book-isbn"
@@ -139,6 +163,7 @@ function appendBookISBN(res, number, parent) {
 
 }
 
+// queryAppendEmpty creates a div that will be shown when the query is empty and appends it to parent
 function queryAppendEmpty(parent) {
     const div = document.createElement('div')
     const para = document.createElement('p')
@@ -153,12 +178,14 @@ function queryAppendEmpty(parent) {
     parent.appendChild(div)
 }
 
+// clearDiv clears a div that is provided in div
 function clearDiv(div) {
     while (div.firstChild) {
         div.removeChild(div.firstChild);
     }
 }
 
+// submitQuery handles the main function of calling all of the append books function
 function submitQuery() {
     if (bookQuery.value == "") {
         clearDiv(booksDiv)
@@ -169,24 +196,26 @@ function submitQuery() {
     }
 }
 
+// links the bookQueryButton to the submitQuery function
 bookQueryButton.addEventListener('click', submitQuery)
 
+// enables the user to just press enter to search instead of clicking the search button
 bookQuery.addEventListener("keypress", function(event) {
-    // If the user presses the "Enter" key on the keyboard
     if (event.key === "Enter") {
-      // Cancel the default action, if needed
       event.preventDefault();
-      // Trigger the button element with a click
       bookQueryButton.click();
     }
-  });
+})
 
-  bookQuery.addEventListener("focusin", function() {
-        bookSearchDiv.classList.add("input-focus")
-  })
+// adds the class "input-focus" when the bookQuery is focused on
+bookQuery.addEventListener("focusin", function() {
+    bookSearchDiv.classList.add("input-focus")
+})
 
-  bookQuery.addEventListener('focusout', function() {
-        bookSearchDiv.classList.remove("input-focus")
-  })
+// removes the class "input-focus" when the bookQuery is not focused on
+bookQuery.addEventListener('focusout', function() {
+    bookSearchDiv.classList.remove("input-focus")
+})
 
-  queryAppendEmpty(booksDiv)
+// calls the queryAppendEmpty first because by default there is no query
+queryAppendEmpty(booksDiv)
