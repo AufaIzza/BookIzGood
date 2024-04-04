@@ -128,17 +128,15 @@ main .book:hover {
 
 main .book .book-info-div {
     height: fit-content;
-    margin-top: auto;
-    margin-bottom: auto;
 }
 
 main .book .book-cover {
-    width: 100px;
-    height: 150px;
+    width: 80px;
+    height: 128px;
 }
 
 main .book .book-title {
-    font-size: 24px;
+    font-size: 28px;
     font-weight: 800;
     text-decoration: underline;
     margin: 0;
@@ -169,6 +167,13 @@ main #pagination .page-arrow {
     transition: 0.3s;
 }
 
+main #pagination .page-arrow-empty {
+    padding: 0 20px;
+    font-size: 24px;
+    font-weight: 200;
+    color: #EDE0D4;
+}
+
 main #pagination .page-arrow:hover {
     background-color: #e6ccb2;
     cursor: pointer;
@@ -176,4 +181,6 @@ main #pagination .page-arrow:hover {
 
 main #pagination .page-number {
     font-weight: 600;
+    display: flex;
+    align-items: center;
 }
