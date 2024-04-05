@@ -134,6 +134,7 @@ function showBooks(parent, query, limit, page) {
 function appendLoad(parent) {
     const para = document.createElement('p')
 
+    para.className = "loading-text"
     para.innerText = "loading..."
 
     parent.appendChild(para)
@@ -252,6 +253,8 @@ function queryAppendEmpty(parent) {
 
     para.innerText = "Query is empty"
     para2.innerText = "Please Enter A Book Name"
+
+    div.className = "empty-query"
 
     div.appendChild(para)
     div.appendChild(para2)

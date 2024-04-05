@@ -92,6 +92,7 @@ main #book-query-submit:hover {
 }
 
 main #book-query-limit-div {
+    justify-content: center;
     display: flex;
     flex-direction: row;
     gap: 10px;
@@ -211,4 +212,23 @@ main #pagination .page-number {
     font-weight: 600;
     display: flex;
     align-items: center;
+}
+
+footer p {
+    text-align: center;
+    font-size: 12px;
+}
+
+.empty-query p {
+    margin: 4px;
+    text-align: center;
+    color: red;
+    font-weight: 800;
+}
+
+.loading-text {
+    margin: 4px;
+    text-align: center;
+    color: blue;
+    font-weight: 800;
 }
