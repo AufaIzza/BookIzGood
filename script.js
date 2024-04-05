@@ -53,12 +53,17 @@ function prevPaginationPage() {
     appendPagination(paginationDiv)
 }
 
+
+// appendPagination calls all pagination function and appends them on parent
 function appendPagination(parent) {
     appendPrevPagination(parent)
     appendCurrentPage(booksPaginationPage, parent)
     appendNextPagination(parent)
 }
 
+// appendNextPagination creates a div element with an arrow
+// and adds a class of "page-arrow" with id of "page-next"
+// then appends it to parent
 function appendNextPagination(parent) {
     const div = document.createElement('div')
     div.innerText = "=>"
@@ -69,6 +74,10 @@ function appendNextPagination(parent) {
     parent.appendChild(div)
 }
 
+// appendNextPagination creates a div element with an arrow
+// and adds a class of "page-arrow" with id of "page-prev"
+// then appends it to parent, it creates a div with class  
+// "page-arrow-empty" if booksPagination page is less than 1
 function appendPrevPagination(parent) {
     const div = document.createElement('div')
     if (booksPaginationPage > 1) {
@@ -93,6 +102,7 @@ function appendCurrentPage(number, parent) {
     parent.appendChild(div)
 }
 
+// resetPagination clears the paginationDiv, resets booksPaginationPage, then appendsPagination back
 function resetPagination() {
     clearDiv(paginationDiv)
     booksPaginationPage = 1
@@ -234,26 +244,6 @@ function appendBookAuthor(res, number, parent) {
 
 }
 
-// appendBookISBN creates a 'p' element that is retrieved from res and appends it to parent
-// parent is the div element that the IMG is gonna be appended to
-// res is the json that is being retrieved from the api
-// number is the index of the book that is being appended
-// the book ISBN have the class name of "book-isbn"
-function appendBookISBN(res, number, parent) {
-    const para = document.createElement('p')
-    para.className = "book-isbn"
-    try {
-        let isbn = JSON.stringify(res.docs[number].isbn[0])
-        isbn = isbn.replace(/['"]+/g, '')
-        para.innerText = `${isbn}`
-        parent.appendChild(para)  
-    } catch (error) {
-        para.innerText = "ISBN not found"
-        parent.appendChild(para)  
-    }
-
-}
-
 // queryAppendEmpty creates a div that will be shown when the query is empty and appends it to parent
 function queryAppendEmpty(parent) {
     const div = document.createElement('div')
@@ -317,9 +307,7 @@ bookQuery.addEventListener('focusout', function() {
     bookSearchDiv.classList.remove("input-focus")
 })
 
-
-
-// calls the queryAppendEmpty first because by default there is no query
-emptyQuery(booksDiv)
+// calls the emptyQuery first because by default there is no query
+emptyQuery()
 
 
